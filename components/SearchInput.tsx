@@ -20,7 +20,6 @@ const SearchInput = () => {
                     key: "topic",
                     value: searchQuery,
                 });
-
                 router.push(newUrl, { scroll: false });
             } else {
                 if (pathname === "/companions") {
@@ -28,14 +27,13 @@ const SearchInput = () => {
                         params: searchParams.toString(),
                         keysToRemove: ["topic"],
                     });
-
                     router.push(newUrl, { scroll: false });
                 }
             }
         }, 500);
 
         return () => clearTimeout(delayDebounceFn);
-    }, [searchQuery, router, searchParams, pathname]);
+    }, [searchQuery, router, pathname]);
 
     return (
         <div className="relative border border-black rounded-lg items-center flex gap-2 px-2 py-1 h-fit">

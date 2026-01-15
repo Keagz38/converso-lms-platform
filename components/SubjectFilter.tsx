@@ -9,20 +9,20 @@ import {
     SelectValue,
 } from "./ui/select";
 import { subjects } from "@/constants";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { formUrlQuery, removeKeysFromUrlQuery } from "@jsmastery/utils";
 
 const SubjectFilter = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const query = searchParams.get("subject") || "";
 
+    const query = searchParams.get("subject") || "";
     const [subject, setSubject] = useState(query);
 
     useEffect(() => {
         let newUrl = "";
-
-        if (subject === "all") {
+        if (subject === "all" || subject === "") {
             newUrl = removeKeysFromUrlQuery({
                 params: searchParams.toString(),
                 keysToRemove: ["subject"],
@@ -34,9 +34,8 @@ const SubjectFilter = () => {
                 value: subject,
             });
         }
-
         router.push(newUrl, { scroll: false });
-    }, [subject])
+    }, [subject, router]);
 
     return (
         <Select onValueChange={setSubject} value={subject}>
@@ -44,9 +43,7 @@ const SubjectFilter = () => {
                 <SelectValue placeholder="Subject" />
             </SelectTrigger>
             <SelectContent>
-                <SelectItem value="all" className="capitalize">
-                    All
-                </SelectItem>
+                <SelectItem value="all">All subjects</SelectItem>
                 {subjects.map((subject) => (
                     <SelectItem
                         key={subject}

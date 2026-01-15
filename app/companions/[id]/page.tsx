@@ -10,7 +10,8 @@ interface CompanionSessionPageProps {
 }
 
 const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
-    const { id } = await params;
+    const paramsObj = await params;
+    const { id } = paramsObj;
     const companion = await getCompanion(id);
     const user = await currentUser();
 
